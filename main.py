@@ -1,6 +1,8 @@
 import socket
 import subprocess
 import time
+import re
+import argparse
 
 RED = "\033[91m"
 GREEN = "\033[92m"
@@ -35,11 +37,23 @@ def service(ip, port):
 
 def scan(ip = "", ports = range(65535), delay=0, ping=True, file=False, fileName="scan.txt"):
     global ping1
+    ipos = ""
     with open(fileName, "a", encoding="utf-8") as f:
         if file:
-            f.write(f"IP {ip} scan result: \n ------------------------------")
+            f.write(f"IP {ip} scan result: \n ------------------------------\n")
         if ping:
             ping1 = subprocess.run(["ping", "-c", "1", ip], capture_output=True, text=True)
+            ipos = re.search(r"ttl=(\d+)", ping1.stdout.lower())
+            if ipos:
+                ipos = int(ipos.group(1))
+                if ipos >= 128:
+                    ipos = "Windows"
+                elif ipos >= 64:
+                    ipos = "Unix(Linux/Mac)"
+                elif ipos >= 255:
+                    ipos = "Dispositivo de red"
+                else:
+                    ipos = "Unknown"
         if not ping or ping1.returncode == 0:
             print(f"{GREEN}[+]{RESET} Escaneando la {ip}")
             openports = 0
@@ -47,7 +61,7 @@ def scan(ip = "", ports = range(65535), delay=0, ping=True, file=False, fileName
                 time.sleep(int(delay))
                 try:
                     sock = socket.socket()
-                    result = sock.connect_ex((ip, p))
+                    result = sock.connect_ex((ip, int(p)))
                     if result == 0:
                         openports+=1
                         serv = service(ip, p)
@@ -58,12 +72,19 @@ def scan(ip = "", ports = range(65535), delay=0, ping=True, file=False, fileName
                     sock.close()
                 except Exception as e:
                     print(f"{RED}[-]{RESET} Ha ocurrido un error escaneando el puerto {p}")
+            print(f"{GREEN}[+]{RESET} OS: {ipos if ipos else "Unknown"}")
+            f.write(f"[+] OS: {ipos if ipos else "Unknown"}\n")
             print(f"{GREEN}[+]{RESET} Escaneo Terminado, se han detectado {openports} puertos abiertos")
+            f.write(f"[+] Escaneo Terminado, se han detectado {openports} puertos abiertos")
         else:
-            print(f"{RED}[-]{RESET} La ip {ip} no da ping, revise su conexion con ella o use ping=False.")
+            print(f"{RED}[-]{RESET} La ip {ip} no da ping, revise su conexion con ella o use el parametro -np.")
 
-host = input("IP Victima: ")
-delay = int(input("Tiempo que se tardara para cada escaneo: "))
-ping = bool(input("Si quieres comprobar que la ip da ping(True) sino (False): "))
-file = bool(input("Guardar la info en un archivo(True), sino (False): "))
-scan(ip=host, delay=delay, ping=ping, file=file)
+parser = argparse.ArgumentParser(description="Escaner de puertos")
+parser.add_argument("-p", "--port", help="Puertos a escanear", type=str)
+parser.add_argument("-d", "--delay", help="Tiempo de espera entre escaneo y escaneo", type=int)
+parser.add_argument("-Pn", "--noping", help="Esperar a recibir ping para escanear o no", action="store_false", dest="np")
+parser.add_argument("-o", "--output", help="Escribir la salida en un archivo", type=str)
+parser.add_argument("ip", help="Ip que recibira el escaneo")
+
+args = parser.parse_args()
+scan(args.ip, args.port.split(",") if args.port != "-" else range(65535), args.delay if args.delay else 0, args.np, True if args.output else False, args.output if args.output else "scan.txt")
