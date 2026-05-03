@@ -1,5 +1,6 @@
 # Port Scanner
-**Port Scanner** es otro escaner de puertos mas, muy parecido en uso a el famoso nmap 
+
+**Port Scanner** es otro escaner de puertos mas, muy parecido en uso a el famoso nmap
 
 ![Python](https://img.shields.io/badge/Python-3.7%2B-blue?logo=python)
 ![License](https://img.shields.io/github/license/bellcodev/port-scanner)
@@ -14,26 +15,26 @@ imagenes ejemplo de uso:
 |---|
 
 | <img width="522" height="227" alt="image" src="https://github.com/user-attachments/assets/d10cf8a7-d167-4dcb-92b5-4ea840d38932" /> |
-|---|
+| ---------------------------------------------------------------------------------------------------------------------------------- |
 
-Parametros: 
+Parametros:
 
             -p1,2,3,4 o --port1,2,3,4 para escanear puertos especificos
 
             -p- o --port- para escanear los 65536 puertos posibles
-            
+
             -d 0 o --delay 0 para ponerle tiempo de delay entre escaneo y escaneo
-            
+
             -o nombre.txt o --output nombre.txt para guardar el escaneo en un archivo
-            
+
             -Pn o --noping para escanear aunque la ip no de ping
-            
+
             -h o --help para una lista de ayuda
-            
+
             El ultimo parametro siempre sera la ip a escanear
 
-
 Uso:
+
 ```
 git clone https://github.com/bellcodev/port-scanner
 cd port-scanner

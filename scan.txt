@@ -1,0 +1,48 @@
+[+] OS: Unix(Linux/Mac)
+[+] Escaneo Terminado, se han detectado 30 puertos abiertosIP 192.168.43.116 scan result: 
+ ------------------------------
+21/ftp
+22/ssh
+23/tcp
+25/ftp
+53/tcp
+80/tcp
+111/tcp
+139/tcp
+445/tcp
+512/tcp
+513/tcp
+514/tcp
+1099/tcp
+1524/tcp
+2049/tcp
+2121/ftp
+3306/tcp
+3632/tcp
+5432/tcp
+5900/tcp
+6000/tcp
+6667/tcp
+6697/tcp
+8009/tcp
+8180/tcp
+8787/tcp
+37098/tcp
+39269/tcp
+46695/tcp
+47815/tcp
+[+] OS: Unix(Linux/Mac)
+[+] Escaneo Terminado, se han detectado 30 puertos abiertosIP 192.168.43.116 scan result: 
+ ------------------------------
+21/ftp
+22/ssh
+23/tcp
+25/ftp
+53/tcp
+80/tcp
+111/tcp
+[+] OS: Unix(Linux/Mac)
+[+] Escaneo Terminado, se han detectado 3 puertos abiertos[+] OS: Unix(Linux/Mac)
+[+] Escaneo Terminado, se han detectado 5 puertos abiertos[+] OS: Unix(Linux/Mac)
+[+] Escaneo Terminado, se han detectado 30 puertos abiertos[+] OS: Unix(Linux/Mac)
+[+] Escaneo Terminado, se han detectado 1 puertos abiertos
